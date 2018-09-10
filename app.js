@@ -15,6 +15,8 @@ var config = {
 };
 
 firebase.initializeApp(config);
+
+var database = firebase.database();
 var user_G;
 var logged =  function (req,res,next) {
 
@@ -99,11 +101,6 @@ app.get('/login',logged,(req,res)=>{
     
 });
 
-app.get('/logged',logged,(req,res)=>{
-    console.log('valid login');
-    //console.log(user_G.displayName);
-    
-});
     
 app.listen(3000,()=>{
     console.log('SERVER STARTED');
