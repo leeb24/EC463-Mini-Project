@@ -16,6 +16,8 @@ var config = {
 
 firebase.initializeApp(config);
 
+app.use(express.static(__dirname + '/Views'));
+
 var database = firebase.database();
 var user_G;
 var logged =  function (req,res,next) {
@@ -34,7 +36,7 @@ var logged =  function (req,res,next) {
         var isAnonymous = user.isAnonymous;
         var uid = user.uid;
         var providerData = user.providerData;
-        user_G = user;
+        user_G = user.email;
         next();
         // ...
       } else {
@@ -57,8 +59,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
 app.get('/', function(req, res){
-  res.render('index.ejs');
-
+  //res.render('index.ejs');
+    res.sendFile(__dirname + '/Views/login_page.html');
 });
 
 app.post('/register',(req,res)=>{
@@ -66,8 +68,13 @@ app.post('/register',(req,res)=>{
     console.log('password: ',req.body.pw);
     let email = req.body.email;
     let password = req.body.pw;
-    
-    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+        
+      firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then(function(user){
+          console.log('successful reg');
+          return res.sendFile(__dirname + '/Views/good_REG.html');
+      })
+      .catch(function(error){
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
@@ -96,6 +103,7 @@ app.post('/login',(req,res)=>{
 });
 
 app.get('/login',logged,(req,res)=>{
+    console.log(user_G);
     console.log('redirecting');
     res.send('LOGGED IN');
     
