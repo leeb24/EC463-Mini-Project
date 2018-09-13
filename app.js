@@ -1,24 +1,44 @@
 const express = require("express");
 const bodyParser = require('body-parser');
 
+var cookieParser = require('cookie-parser');
+var mysql = require('mysql');
 var app = express();
-
 var firebase = require("firebase");
+var jwt = require('jsonwebtoken');
 
 var config = {
+    
     apiKey: "AIzaSyD4QbS7xiS5kkkUrH8sY6dEaDiOmzy0-Yw",
     authDomain: "mini-proj-f24a3.firebaseapp.com",
     databaseURL: "https://mini-proj-f24a3.firebaseio.com",
     projectId: "mini-proj-f24a3",
     storageBucket: "mini-proj-f24a3.appspot.com",
     messagingSenderId: "443719865364"
+    
 };
 
 firebase.initializeApp(config);
 
-app.use(express.static(__dirname + '/Views'));
+var ref = firebase.app().database().ref();
+var datasRef = ref.child('data');
 
-var database = firebase.database();
+var time = Date.now();
+console.log(time);
+
+/*datasRef.push({
+ email: "test@bu.edu",
+ humidity: 50,
+ temperature: 19,
+ time: 0
+});*/
+
+//MIDDLEWARE
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(__dirname + '/Views'));
+app.use(cookieParser());
+
 var user_G;
 var logged =  function (req,res,next) {
 
@@ -48,11 +68,18 @@ var logged =  function (req,res,next) {
     });
 };
 
-
-
-//MIDDLEWARE
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+var cookieVerify = function (req,res,next){
+    console.log(req.cookie);
+    jwt.verify(req.cookie, 'Mini-Project', function(err, decoded) {
+        if(err){
+            console.log('Invalid Access Detected');
+        }
+        else{
+            console.log('Token Verified!');
+            next();
+        }
+    });
+}
 
 
 
@@ -72,7 +99,8 @@ app.post('/register',(req,res)=>{
       firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(function(user){
           console.log('successful reg');
-          return res.sendFile(__dirname + '/Views/good_REG.html');
+          var token = jwt.sign({ email: email , pw: password }, 'Mini_Project');
+          res.cookie('Token' ,  token , { maxAge: 900000 });
       })
       .catch(function(error){
       // Handle Errors here.
@@ -102,9 +130,10 @@ app.post('/login',(req,res)=>{
     
 });
 
-app.get('/login',logged,(req,res)=>{
+app.get('/login',cookieVerify,(req,res)=>{
     console.log(user_G);
     console.log('redirecting');
+    console.log(req.cookies);
     res.send('LOGGED IN');
     
 });
