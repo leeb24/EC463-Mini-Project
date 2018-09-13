@@ -130,7 +130,7 @@ app.post('/login',(req,res)=>{
     
 });
 
-app.get('/login',cookieVerify,(req,res)=>{
+app.get('/login',logged,(req,res)=>{
     console.log(user_G);
     console.log('redirecting');
     console.log(req.cookies);
