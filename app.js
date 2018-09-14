@@ -34,10 +34,11 @@ console.log(time);
 });*/
 
 //MIDDLEWARE
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/Views'));
-app.use(cookieParser());
+
 
 var user_G;
 var logged =  function (req,res,next) {
@@ -69,9 +70,10 @@ var logged =  function (req,res,next) {
 };
 
 var cookieVerify = function (req,res,next){
-    console.log(req.cookie);
-    jwt.verify(req.cookie, 'Mini-Project', function(err, decoded) {
+    console.log(req.cookies);
+    jwt.verify(req.cookies.Token, 'Mini_Project', function(err, decoded){
         if(err){
+            console.log(err);
             console.log('Invalid Access Detected');
         }
         else{
@@ -79,7 +81,7 @@ var cookieVerify = function (req,res,next){
             next();
         }
     });
-}
+};
 
 
 
@@ -100,7 +102,8 @@ app.post('/register',(req,res)=>{
       .then(function(user){
           console.log('successful reg');
           var token = jwt.sign({ email: email , pw: password }, 'Mini_Project');
-          res.cookie('Token' ,  token , { maxAge: 900000 });
+          console.log(token);
+          return res.cookie('Token' , token).send('cookie set');;
       })
       .catch(function(error){
       // Handle Errors here.
@@ -130,10 +133,10 @@ app.post('/login',(req,res)=>{
     
 });
 
-app.get('/login',logged,(req,res)=>{
+app.get('/login',cookieVerify,(req,res)=>{
+    
     console.log(user_G);
     console.log('redirecting');
-    console.log(req.cookies);
     res.send('LOGGED IN');
     
 });
