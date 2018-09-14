@@ -77,7 +77,7 @@ var cookieVerify = function (req,res,next){
             console.log('Invalid Access Detected');
         }
         else{
-            console.log('Token Verified!');
+            console.log('Token Verified!: ', decoded);
             next();
         }
     });
@@ -103,7 +103,7 @@ app.post('/register',(req,res)=>{
           console.log('successful reg');
           var token = jwt.sign({ email: email , pw: password }, 'Mini_Project');
           console.log(token);
-          return res.cookie('Token' , token).send('cookie set');;
+          return res.cookie('Token' , token).send('cookie set');
       })
       .catch(function(error){
       // Handle Errors here.
@@ -117,9 +117,13 @@ app.post('/register',(req,res)=>{
 app.post('/login',(req,res)=>{
   let email = req.body.email;
   let password = req.body.pw;
+    
   firebase.auth().signInWithEmailAndPassword(email, password)
   .then(function(firebaseUser) {
        console.log('POST logged in');
+       var token = jwt.sign({ email: email , pw: password }, 'Mini_Project');
+       console.log(token);
+       res.cookie('Token' , token);
        return res.redirect('/login');
    })
   .catch(function(error) {
@@ -134,8 +138,7 @@ app.post('/login',(req,res)=>{
 });
 
 app.get('/login',cookieVerify,(req,res)=>{
-    
-    console.log(user_G);
+
     console.log('redirecting');
     res.send('LOGGED IN');
     
