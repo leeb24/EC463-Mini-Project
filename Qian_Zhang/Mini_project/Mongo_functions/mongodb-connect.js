@@ -7,7 +7,7 @@ const MongoClient = require('mongodb').MongoClient;
 // var{temperature} = Room_1;
 // console.log(temperature);
 
-//Create 
+//Create  
 MongoClient.connect('mongodb://localhost:27017/Mini_Project_databse', (err, db)=> {
     if (err) {
         return console.log('Unable to connect to MongoDB server');
