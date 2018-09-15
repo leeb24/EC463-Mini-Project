@@ -23,9 +23,6 @@ firebase.initializeApp(config);
 var ref = firebase.app().database().ref();
 var datasRef = ref.child('data');
 
-var time = Date.now();
-console.log(time);
-
 /*datasRef.push({
  email: "test@bu.edu",
  humidity: 50,
@@ -78,6 +75,7 @@ var cookieVerify = function (req,res,next){
         }
         else{
             console.log('Token Verified!: ', decoded);
+            res.cookie('Decoded',decoded);
             next();
         }
     });
@@ -140,6 +138,9 @@ app.post('/login',(req,res)=>{
 app.get('/login',cookieVerify,(req,res)=>{
 
     console.log('redirecting');
+    
+    console.log(req.cookies.Decoded.email); //Used to query user data
+    
     res.send('LOGGED IN');
     
 });
@@ -148,3 +149,7 @@ app.get('/login',cookieVerify,(req,res)=>{
 app.listen(3000,()=>{
     console.log('SERVER STARTED');
 });
+
+
+
+//GET
