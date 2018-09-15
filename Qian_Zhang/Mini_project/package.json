@@ -9,9 +9,11 @@
   "author": "Qian Zhang",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "hbs": "^4.0.1",
     "lodash": "^4.17.11",
+    "mongodb": "^3.1.6",
     "mongoose": "^5.2.14",
     "random-number": "0.0.9",
     "request": "^2.88.0"

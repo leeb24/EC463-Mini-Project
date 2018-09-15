@@ -5,26 +5,32 @@ const fs = require('fs');
 const app = express();
 const request = require('request');
 
-const rand_num = require('./random_num.js');
+const {mongoose} = require('./Functions/mongoose.js');
+const mongo_create = require('./Functions/create.js');  //"mongoose validation", moogoose schemas
+const mongo_find = require('./Functions/find.js');
+//mongo_create.create_data('student_1'); //connect_data = (id)
+//mongo_find.find_data('student_6', 'humidity','Room_1');
+//mongo_find.find_data('student_1', 'humidity');
 
-console.log(rand_num.number_generated());
+var Subject = mongoose.model('temperature', {
+    _id: { type: String },
+});
 
-// const {mongoose} = require('./Mongo_functions/mongoose.js');
+var out = Subject.findById('student_1', 'Room_1', { lean: true }, function (err, user) {
+    if (err) {
+        console.log('err');
+    }
+    //console.log(user);
+    return user.Room_1;
+});
 
-// const mongo_create = require('./Mongo_functions/create.js');
-// //"mongoose validation", moogoose schemas
+console.log(out);
 
-// //const mongodb_update = require('./Mongo_functions/mongodb-update.js');
-// //const mongodb_find = require('./Mongo_functions/mongodb-find.js');
-
-// mongo_create.create_data('student_6'); //connect_data = (id)
-// //mongodb_update.update_data('student_2', 'Temperature', 'Room_1', 90); //update_data = (id,subject,room,data)
-// //mongodb_find.find_data('student_2', 'Temperature', 90); //update_data = (id,subject,room,data)
-
-// const mongodb_delete = require('./Mongo_functions/mongodb-delete.js');
-
-
+// var app = express();
+// app.post('', (req, res)=>
+// )
 // hbs.registerPartials(__dirname + '/views/partials');
+
 // app.set('view engine', 'hbs');
 
 // app.use(express.static(__dirname + '/public'));
@@ -64,6 +70,6 @@ console.log(rand_num.number_generated());
 //     });
 // }); 
 
-// app.listen(3000, () => {
-//     console.log('Server Started')
-// });    
+app.listen(3000, () => {
+     console.log('Server Started')
+});    
