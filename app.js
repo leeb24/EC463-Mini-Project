@@ -164,11 +164,9 @@ app.get('/login',cookieVerify,(req,res)=>{
     var collection = req.cookies.Decoded.email;
     var result;
     /*user.find({email:collection},function(err,doc){
-
         if(err){
             return console.log(err)
         }
-
         result = doc;
 
     })
