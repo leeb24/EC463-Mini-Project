@@ -11,8 +11,9 @@ const fs = require('fs');
 const request = require('request');
 
 var {mongoose} = require('./models/mongoose.js');
-var {temperature_model} = require('./models/temperature_model.js');  //"mongoose validation", moogoose schemas
-var {humidity_model} = require('./models/humidity_model.js');
+// var {temperature_model} = require('./models/temperature_model.js');  //"mongoose validation", moogoose schemas
+// var {humidity_model} = require('./models/humidity_model.js');
+var {user_model} = require('./models/user_model.js');
 
 var config = {
     
@@ -105,23 +106,15 @@ app.post('/register',(req,res)=>{
     let password = req.body.pw;
 
     //Create database;
-    var Temperature_User = new temperature_model({
+    var User_Data = new user_model({
         _id: email
     });
-    Temperature_User.save().then(()=> {
-        console.log('Temperature created');
+    User_Data.save().then(()=> {
+        console.log('New user data created');
     }, (e) => {
-        console.log('Temperature error');
+        console.log('New user data error');
     });
 
-    var Humidity_User = new humidity_model({
-        _id: email
-    });
-    Humidity_User.save().then(()=> {
-        console.log('Humidity created');
-    }, (e) => {
-        console.log('Humidity error');
-    });
 
     
 
@@ -243,11 +236,7 @@ app.get('/Room2',(req,res)=>{
         else{
             console.log(data.Room_2);
         }
-    });
-    
-    
-    
-
+    }); 
 });
 
 app.get('/Room3',(req,res)=>{
