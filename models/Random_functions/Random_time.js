@@ -29,13 +29,13 @@ var min_random = {
     max: 20,
     integer: true
 }
-var min = rn(min_random);
+var min_time = 0;
 
 var matrix =[];
 module.exports.time_generated = () => {
     for (i = 0; i < 10; i++) {
-        matrix[i] = '2018-' + month + '-' + day + ' ' + hour + ':' + min+':00';
-        min = min+2;
+        matrix[i] = '2018-' + month + '-' + day + ' ' + hour + ':' + min_time+':00';
+        min_time +=2;
     }
     return matrix;
 };

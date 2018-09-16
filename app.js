@@ -209,23 +209,14 @@ app.get('/Room1', (req, res) => {
             var graphOptions = { filename: "date-axes", fileopt: "overwrite" };
             plotly.plot(data, graphOptions, function (err, msg) {
                 console.log(msg);
+                res.sendFile(__dirname + '/Views/plot1.html');
             });
             //console.log(data.Room_1);
 
         }
     });
 
-    // temperature_model.findById(id ,{'Room_1':1},function(err,data){
-    //     if(err)
-    //     {
-    //         return console.log(err);
-    //     }
-    //     else{
-    //         //console.log(data.Room_1);
-    //         room1Temp= data.Room_1;
-    //     }
-    // });
-    // console.log(room1Hum,room1Temp);
+
 
 });
 
@@ -245,15 +236,7 @@ app.get('/Room2', (req, res) => {
         }
     });
 
-    // temperature_model.findById(id ,{'Room_2':1},function(err,data){
-    //     if(err)
-    //     {
-    //         return console.log(err);
-    //     }
-    //     else{
-    //         console.log(data.Room_2);
-    //     }
-    // }); 
+    
 });
 
 app.get('/Room3', (req, res) => {
@@ -270,15 +253,7 @@ app.get('/Room3', (req, res) => {
             room1Hum = data.Room_3_humidity,
                 room1Temp = data.Room_3_temperature
         }
-        // temperature_model.findById(id ,{'Room_3':1},function(err,data){
-        //     if(err)
-        //     {
-        //         return console.log(err);
-        //     }
-        //     else{
-        //         console.log(data.Room_3);
-        //     }
-        // });
+ 
     });
 
 });
