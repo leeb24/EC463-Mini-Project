@@ -43,7 +43,7 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/Views'));
-
+hbs.registerPartials(__dirname + './Views/partials');
 
 var user_G;
 var logged =  function (req,res,next) {
@@ -178,9 +178,15 @@ app.get('/login',cookieVerify,(req,res)=>{
 
     })
     
-    res.send('LOGGED IN',doc);
+    */
+
+   res.render('homepage.hbs',{
+    pageTitle:'Temp and Humidity Plotter',
+    welcomeMessage:'hihi'
+
+   });
     
-});*/
+
 });
 
     
