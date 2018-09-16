@@ -28,8 +28,6 @@ var config = {
 
 
 firebase.initializeApp(config);
-mongoose.Promise = global.Promise
-mongoose.connect('mongodb://test2:dlqudtjf24@ds119422.mlab.com:19422/test-todo-db');
 
 
 var Info = mongoose.model('datas', {
@@ -105,31 +103,34 @@ app.post('/register',(req,res)=>{
     console.log('password: ',req.body.pw);
     let email = req.body.email;
     let password = req.body.pw;
-        
+
+    //Create database;
+    var Temperature_User = new temperature_model({
+        _id: email
+    });
+    Temperature_User.save().then(()=> {
+        console.log('Temperature created');
+    }, (e) => {
+        console.log('Temperature error');
+    });
+
+    var Humidity_User = new humidity_model({
+        _id: email
+    });
+    Humidity_User.save().then(()=> {
+        console.log('Humidity created');
+    }, (e) => {
+        console.log('Humidity error');
+    });
+
+
       firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(function(user){
           console.log('successful reg');
           var token = jwt.sign({ email: email , pw: password }, 'Mini_Project');
           console.log(token);
+          res.cookie('Token' , token).send('cookie set');
 
-            //Create User Collection
-            /*info.temp = 12;
-            info.humidity = 80;
-            info.email = email;
-
-            user1
-            .save().then((result)=>{
-
-                console.log('Save Finished');
-
-            },(e)=>{
-
-                console.log(e);
-
-            });*/
-
-
-          return res.cookie('Token' , token).send('cookie set');
       })
       .catch(function(error){
       // Handle Errors here.
@@ -138,6 +139,8 @@ app.post('/register',(req,res)=>{
       console.log(errorMessage);
       // ...
     });
+
+    
 });
 
 app.post('/login',(req,res)=>{
