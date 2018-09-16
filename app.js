@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require('body-parser');
-
+var mongoose = require('mongoose')
 var cookieParser = require('cookie-parser');
 var mysql = require('mysql');
 var app = express();
@@ -18,17 +18,18 @@ var config = {
     
 };
 
+
 firebase.initializeApp(config);
+mongoose.Promise = global.Promise
+mongoose.connect('mongodb://test2:dlqudtjf24@ds119422.mlab.com:19422/test-todo-db');
 
-var ref = firebase.app().database().ref();
-var datasRef = ref.child('data');
 
-/*datasRef.push({
- email: "test@bu.edu",
- humidity: 50,
- temperature: 19,
- time: 0
-});*/
+var Info = mongoose.model('datas', {
+    temp: Number, 
+    humidity: Number,
+    email: String
+});
+var info = new Info;
 
 //MIDDLEWARE
 app.use(cookieParser());
@@ -90,6 +91,7 @@ app.get('/', function(req, res){
     res.sendFile(__dirname + '/Views/login_page.html');
 });
 
+
 app.post('/register',(req,res)=>{
     console.log('email: ',req.body.email);
     console.log('password: ',req.body.pw);
@@ -101,6 +103,24 @@ app.post('/register',(req,res)=>{
           console.log('successful reg');
           var token = jwt.sign({ email: email , pw: password }, 'Mini_Project');
           console.log(token);
+
+            //Create User Collection
+            /*info.temp = 12;
+            info.humidity = 80;
+            info.email = email;
+
+            user1
+            .save().then((result)=>{
+
+                console.log('Save Finished');
+
+            },(e)=>{
+
+                console.log(e);
+
+            });*/
+
+
           return res.cookie('Token' , token).send('cookie set');
       })
       .catch(function(error){
@@ -125,12 +145,12 @@ app.post('/login',(req,res)=>{
        return res.redirect('/login');
    })
   .catch(function(error) {
-  // Handle Errors here.
-  var errorCode = error.code;
-  var errorMessage = error.message;
-  console.log(errorMessage);
-  return res.redirect('/');
-  // ...
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log(errorMessage);
+      return res.redirect('/');
+      // ...
   });
     
 });
@@ -141,9 +161,21 @@ app.get('/login',cookieVerify,(req,res)=>{
     
     console.log(req.cookies.Decoded.email); //Used to query user data
     
-    res.send('LOGGED IN');
+    var collection = req.cookies.Decoded.email;
+    var result;
+    /*user.find({email:collection},function(err,doc){
+
+        if(err){
+            return console.log(err)
+        }
+
+        result = doc;
+
+    })
     
-});
+    res.send('LOGGED IN',doc);
+    
+});*/
 
     
 app.listen(3000,()=>{
