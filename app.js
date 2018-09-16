@@ -7,8 +7,7 @@ var app = express();
 var firebase = require("firebase");
 var jwt = require('jsonwebtoken');
 const hbs = require('hbs');
-const fs = require('fs');
-const request = require('request');
+var plotly = require('plotly');
 
 var {mongoose} = require('./models/mongoose.js');
 var {temperature_model} = require('./models/temperature_model.js');  //"mongoose validation", moogoose schemas
@@ -199,13 +198,16 @@ app.get('/login',cookieVerify,(req,res)=>{
 app.get('/Room1',(req,res)=>{
     var id = req.cookies.Decoded.email;
     console.log('id is : ', id);
+    var room1Temp;
+    var room1Hum;
     humidity_model.findById(id ,{'Room_1':1},function(err,data){
         if(err)
         {
             return console.log(err);
         }
         else{
-            console.log(data.Room_1);
+            //console.log(data.Room_1);
+            room1Hum = data.Room_1;
         }
     });
 
@@ -215,16 +217,18 @@ app.get('/Room1',(req,res)=>{
             return console.log(err);
         }
         else{
-            console.log(data.Room_1);
+            //console.log(data.Room_1);
+            room1Temp= data.Room_1;
         }
     });
-    
+    console.log(room1Hum,room1Temp);
 
 });
 
 app.get('/Room2',(req,res)=>{
     var id = req.cookies.Decoded.email;
     console.log('id is : ', id);
+    
     humidity_model.findById(id ,{'Room_2':1},function(err,data){
         if(err)
         {
@@ -232,6 +236,7 @@ app.get('/Room2',(req,res)=>{
         }
         else{
             console.log(data.Room_2);
+           
         }
     });
 
