@@ -1,7 +1,5 @@
 
-const { mongoose } = require('./mongoose.js');
-var output;
-
+const { mongoose } = require('../models/mongoose.js');
 
 
 
