@@ -206,8 +206,9 @@ app.get('/Room1',(req,res)=>{
             return console.log(err);
         }
         else{
-            //console.log(data.Room_1);
-            room1Hum = data.Room_1;
+
+           
+
         }
     });
 
@@ -221,6 +222,8 @@ app.get('/Room1',(req,res)=>{
             room1Temp= data.Room_1;
         }
     });
+
+    
     console.log(room1Hum,room1Temp);
 
 });
