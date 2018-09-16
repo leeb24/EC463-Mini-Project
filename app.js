@@ -194,6 +194,22 @@ app.get('/login',cookieVerify,(req,res)=>{
 
 });
 
+app.get('/Room1',(req,res)=>{
+    var id = req.cookies.Decoded.email;
+    console.log('id is : ', id);
+    humidity_model.findById(id ,{'Room_1':1},function(err,data){
+        if(err)
+        {
+            return console.log(err);
+        }
+        else{
+            console.log(data);
+        }
+    });
+    
+
+});
+
     
 app.listen(3000,()=>{
     console.log('SERVER STARTED');
