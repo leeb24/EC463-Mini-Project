@@ -6,6 +6,13 @@ var mysql = require('mysql');
 var app = express();
 var firebase = require("firebase");
 var jwt = require('jsonwebtoken');
+const hbs = require('hbs');
+const fs = require('fs');
+const request = require('request');
+
+var {mongoose} = require('./models/mongoose.js');
+var {temperature_model} = require('./models/temperature_model.js');  //"mongoose validation", moogoose schemas
+var {humidity_model} = require('./models/humidity_model.js');
 
 var config = {
     
@@ -174,12 +181,9 @@ app.get('/login',cookieVerify,(req,res)=>{
     res.send('LOGGED IN',doc);
     
 });*/
+});
 
     
 app.listen(3000,()=>{
     console.log('SERVER STARTED');
 });
-
-
-
-//GET
