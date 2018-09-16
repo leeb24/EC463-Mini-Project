@@ -46,7 +46,7 @@ app.get('/temperature', (req,res)=> {
 
 app.get('/temperature/:id',(req,res)=>{
     var id = req.params.id;
-    temperature_model.findById('student_1',{'Room_1':1}).lean().then((temperature_data)=>{
+    temperature_model.findById(id,{'Room_1':1}).lean().then((temperature_data)=>{
         if (!temperature_data) {
             return rs.status(400).send();
         }
@@ -81,9 +81,9 @@ app.get('/', (req, res) => {
     });
 });
 
-var temp_data = fs.readFileSync('temp_data.txt', 'utf8', function(err, contents) {
-    return contents;
-});
+// var temp_data = fs.readFileSync('temp_data.txt', 'utf8', function(err, contents) {
+//     return contents;
+// });
 
 app.get('/temperature', (req,res)=>{
     res.render('temperature.hbs', {
