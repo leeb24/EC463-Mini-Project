@@ -10,8 +10,8 @@ const hbs = require('hbs');
 var plotly = require('plotly');
 
 var {mongoose} = require('./models/mongoose.js');
-// var {temperature_model} = require('./models/temperature_model.js');  //"mongoose validation", moogoose schemas
-// var {humidity_model} = require('./models/humidity_model.js');
+var {temperature_model} = require('./models/temperature_model.js');  //"mongoose validation", moogoose schemas
+var {humidity_model} = require('./models/humidity_model.js');
 var {user_model} = require('./models/user_model.js');
 
 var config = {
@@ -193,83 +193,84 @@ app.get('/Room1',(req,res)=>{
     console.log('id is : ', id);
     var room1Temp;
     var room1Hum;
-    humidity_model.findById(id ,{'Room_1':1},function(err,data){
+    user_model.findById(id ,{'Room_1_humidity':1, 'Room_1_temperature':1},function(err,data){
         if(err)
         {
             return console.log(err);
         }
         else{
             //console.log(data.Room_1);
-            room1Hum = data.Room_1;
+            room1Hum = data.Room_1_humidity, 
+            room1Temp = data.Room_1_temperature
         }
     });
 
-    temperature_model.findById(id ,{'Room_1':1},function(err,data){
-        if(err)
-        {
-            return console.log(err);
-        }
-        else{
-            //console.log(data.Room_1);
-            room1Temp= data.Room_1;
-        }
-    });
-    console.log(room1Hum,room1Temp);
+    // temperature_model.findById(id ,{'Room_1':1},function(err,data){
+    //     if(err)
+    //     {
+    //         return console.log(err);
+    //     }
+    //     else{
+    //         //console.log(data.Room_1);
+    //         room1Temp= data.Room_1;
+    //     }
+    // });
+    // console.log(room1Hum,room1Temp);
 
 });
 
 app.get('/Room2',(req,res)=>{
     var id = req.cookies.Decoded.email;
     console.log('id is : ', id);
-    
-    humidity_model.findById(id ,{'Room_2':1},function(err,data){
+    var room2Temp;
+    var room2Hum;
+    user_model.findById(id ,{'Room_2_humidity':1, 'Room_2_temperature':1},function(err,data){
         if(err)
         {
             return console.log(err);
         }
         else{
-            console.log(data.Room_2);
-           
+            //console.log(data.Room_2);
+            room2Hum = data.Room_2_humidity, 
+            room2Temp = data.Room_2_temperature
         }
     });
 
-    temperature_model.findById(id ,{'Room_2':1},function(err,data){
-        if(err)
-        {
-            return console.log(err);
-        }
-        else{
-            console.log(data.Room_2);
-        }
-    }); 
+    // temperature_model.findById(id ,{'Room_2':1},function(err,data){
+    //     if(err)
+    //     {
+    //         return console.log(err);
+    //     }
+    //     else{
+    //         console.log(data.Room_2);
+    //     }
+    // }); 
 });
 
 app.get('/Room3',(req,res)=>{
     var id = req.cookies.Decoded.email;
     console.log('id is : ', id);
-    humidity_model.findById(id ,{'Room_3':1},function(err,data){
+    var room3Temp;
+    var room3Hum;
+    user_model.findById(id ,{'Room_3_humidity':1, 'Room_3_temperature':1},function(err,data){
         if(err)
         {
             return console.log(err);
         }
         else{
-            console.log(data.Room_3);
+            //console.log(data.Room_3);
+            room1Hum = data.Room_3_humidity, 
+            room1Temp = data.Room_3_temperature
         }
-    });
-
-    temperature_model.findById(id ,{'Room_3':1},function(err,data){
-        if(err)
-        {
-            return console.log(err);
-        }
-        else{
-            console.log(data.Room_3);
-        }
-    });
-    
-
-    
-
+    // temperature_model.findById(id ,{'Room_3':1},function(err,data){
+    //     if(err)
+    //     {
+    //         return console.log(err);
+    //     }
+    //     else{
+    //         console.log(data.Room_3);
+    //     }
+    // });
 });
 
     
