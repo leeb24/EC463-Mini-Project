@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const random_humidity = require('./Random_functions/Random_humidity.js');
 
-var Humidity_Data = mongoose.model('Humidity_Data', {
+var humidity_model = mongoose.model('Humidity', {
     _id: { type: String },
     Room_1: { 
         type: String,
@@ -17,4 +17,4 @@ var Humidity_Data = mongoose.model('Humidity_Data', {
     }
 });
 
-module.exports = {Humidity_Data};
+module.exports = {humidity_model};
