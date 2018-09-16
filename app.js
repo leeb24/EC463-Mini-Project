@@ -26,6 +26,7 @@ var config = {
 };
 
 
+
 firebase.initializeApp(config);
 mongoose.Promise = global.Promise
 mongoose.connect('mongodb://test2:dlqudtjf24@ds119422.mlab.com:19422/test-todo-db');
@@ -140,6 +141,7 @@ app.post('/register',(req,res)=>{
 });
 
 app.post('/login',(req,res)=>{
+
   let email = req.body.email;
   let password = req.body.pw;
     
