@@ -208,6 +208,72 @@ app.get('/Room1',(req,res)=>{
             console.log(data.Room_1);
         }
     });
+
+    temperature_model.findById(id ,{'Room_1':1},function(err,data){
+        if(err)
+        {
+            return console.log(err);
+        }
+        else{
+            console.log(data.Room_1);
+        }
+    });
+    
+
+});
+
+app.get('/Room2',(req,res)=>{
+    var id = req.cookies.Decoded.email;
+    console.log('id is : ', id);
+    humidity_model.findById(id ,{'Room_2':1},function(err,data){
+        if(err)
+        {
+            return console.log(err);
+        }
+        else{
+            console.log(data.Room_2);
+        }
+    });
+
+    temperature_model.findById(id ,{'Room_2':1},function(err,data){
+        if(err)
+        {
+            return console.log(err);
+        }
+        else{
+            console.log(data.Room_2);
+        }
+    });
+    
+    
+    
+
+});
+
+app.get('/Room3',(req,res)=>{
+    var id = req.cookies.Decoded.email;
+    console.log('id is : ', id);
+    humidity_model.findById(id ,{'Room_3':1},function(err,data){
+        if(err)
+        {
+            return console.log(err);
+        }
+        else{
+            console.log(data.Room_3);
+        }
+    });
+
+    temperature_model.findById(id ,{'Room_3':1},function(err,data){
+        if(err)
+        {
+            return console.log(err);
+        }
+        else{
+            console.log(data.Room_3);
+        }
+    });
+    
+
     
 
 });
