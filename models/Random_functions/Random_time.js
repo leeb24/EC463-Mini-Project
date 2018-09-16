@@ -34,8 +34,8 @@ var min = rn(min_random);
 var matrix =[];
 module.exports.time_generated = () => {
     for (i = 0; i < 10; i++) {
-        matrix[i] = '2018' + '/' + month + '/' + day + '/' + hour + ':' + min;
-        min = min+5;
+        matrix[i] = '2018-' + month + '-' + day + ' ' + hour + ':' + min+':00';
+        min = min+2;
     }
     return matrix;
 };
