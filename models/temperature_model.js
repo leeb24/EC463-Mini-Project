@@ -1,20 +1,25 @@
 const mongoose = require('mongoose');
 
 const random_temperature = require('./Random_functions/Random_temperature.js');
+const random_time = require('./Random_functions/Random_time.js');
 
 var temperature_model = mongoose.model('Temperature', {
     _id: { type: String },
     Room_1: { 
-        type: String,
+        type: [],
         default: random_temperature.temperature_generated()
     },
     Room_2: { 
-        type: String,
+        type: [],
         default: random_temperature.temperature_generated()
     },
     Room_3: { 
-        type: String,
+        type: [],
         default: random_temperature.temperature_generated() 
+    },
+    Time: { 
+        type: [],
+        default: random_time.time_generated() 
     }
 });
 

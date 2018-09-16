@@ -123,6 +123,8 @@ app.post('/register',(req,res)=>{
         console.log('Humidity error');
     });
 
+    
+
 
       firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(function(user){
@@ -203,7 +205,7 @@ app.get('/Room1',(req,res)=>{
             return console.log(err);
         }
         else{
-            console.log(data);
+            console.log(data.Room_1);
         }
     });
     
