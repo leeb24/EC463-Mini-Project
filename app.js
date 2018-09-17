@@ -10,8 +10,6 @@ const hbs = require('hbs');
 var plotly = require('plotly')("Mini-Project", "gyJSx4qEcM6AZ77gntxr");
 
 var { mongoose } = require('./models/mongoose.js');
-var { temperature_model } = require('./models/temperature_model.js');  //"mongoose validation", moogoose schemas
-var { humidity_model } = require('./models/humidity_model.js');
 var { user_model } = require('./models/user_model.js');
 
 var config = {
@@ -46,10 +44,8 @@ hbs.registerPartials(__dirname + './Views/partials');
 
 var user_G;
 var logged = function (req, res, next) {
-
     console.log('IN MIDDLEWARE');
     //VERIFY USER
-
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             console.log('USER SIGNED IN');
@@ -88,8 +84,6 @@ var cookieVerify = function (req, res, next) {
     });
 };
 
-
-
 app.set('view engine', 'ejs');
 
 app.get('/', function (req, res) {
@@ -113,11 +107,6 @@ app.post('/register', (req, res) => {
     }, (e) => {
         console.log('New user data error');
     });
-
-
-
-
-
     firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(function (user) {
             console.log('successful reg');
@@ -133,8 +122,6 @@ app.post('/register', (req, res) => {
             console.log(errorMessage);
             // ...
         });
-
-
 });
 
 app.post('/login', (req, res) => {
@@ -180,9 +167,6 @@ app.get('/login', cookieVerify, (req, res) => {
     */
 
     res.render('homepage.hbs', {
-        pageTitle: 'Temp and Humidity Plotter',
-        welcomeMessage: 'hihi'
-
     });
 
 
@@ -191,8 +175,7 @@ app.get('/login', cookieVerify, (req, res) => {
 app.get('/Room1', (req, res) => {
     var id = req.cookies.Decoded.email;
     console.log('id is : ', id);
-
-    user_model.findById(id, { 'Room_1_humidity': 1, 'Room_1_temperature': 1,'Time':1 }, function (err, data) {
+    user_model.findById(id, function (err, data) {
         if (err) {
             return console.log(err);
         }
@@ -208,7 +191,6 @@ app.get('/Room1', (req, res) => {
                     type: "bar"
                 }
             ];
-
             var Tempdata ={
                 x:data.Time,
                 y:data.Room_1_temperature,
@@ -241,7 +223,6 @@ app.get('/Room1', (req, res) => {
                 fill: "tonexty",
                 type: "scatter"
               };
-
               var layout = {
                 title:"Temperature and Humidity",
                 autosize: false,
@@ -257,22 +238,18 @@ app.get('/Room1', (req, res) => {
                 paper_bgcolor: "#ffffff",
                 plot_bgcolor: "#ffffff"
               };
-
               var data = [Humidity_Data, Temperature_Data];
               var graphOptions = {layout:layout,filename: "basic-area", fileopt: "overwrite"};
                   plotly.plot(data, graphOptions, function (err, msg) {
                    console.log('new plot',msg);
-               });
-            
+               });       
             var graphOptions = { layout: temp_layout ,filename: "Temp-data", fileopt: "overwrite" };
             plotly.plot(Tempdata, graphOptions, function (err, msg) {
                 if(err){
                     console.log(err);
                 }
-                console.log(msg);
-                
+                console.log(msg);        
             });
-
             var graphOptions = { filename: "Hum_data", fileopt: "overwrite" };
             plotly.plot(Humiditydata, graphOptions, function (err, msg) {
                 if(err){
@@ -281,8 +258,6 @@ app.get('/Room1', (req, res) => {
                 console.log(msg);
                 res.sendFile(__dirname + '/Views/plot1.html');
             });
-            //console.log(data.Room_1);
-
         }
     });
 
