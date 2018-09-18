@@ -1,6 +1,5 @@
 const express = require("express");
 const bodyParser = require('body-parser');
-var mongoose = require('mongoose')
 var cookieParser = require('cookie-parser');
 var mysql = require('mysql');
 var app = express();
@@ -9,8 +8,8 @@ var jwt = require('jsonwebtoken');
 const hbs = require('hbs');
 var plotly = require('plotly')("Mini-Project", "gyJSx4qEcM6AZ77gntxr");
 
-var { mongoose } = require('./models/mongoose.js');
-var { user_model } = require('./models/user_model.js');
+const { mongoose } = require('./models/mongoose.js');
+const { user_model } = require('./models/user_model.js');
 
 var config = {
 
@@ -180,79 +179,77 @@ app.get('/Room1', (req, res) => {
             return console.log(err);
         }
         else {
-            console.log('Time is',data);
-
             var Humiditydata = [
                 {
                     x: data.Time,
                     y: data.Room_1_humidity,
                     name: "Humidity",
-                    marker: {color: "rgb(135,206,250)"},
+                    marker: { color: "rgb(135,206,250)" },
                     type: "bar"
                 }
             ];
-            var Tempdata ={
-                x:data.Time,
-                y:data.Room_1_temperature,
-                name: "Temperature",
-                marker: {color: "rgb(255,0,0)"},
-                type:"scatter"
-            }
-              var temp_layout = {
-              title:"Temperature Graph",
-              yaxis:{title:"Temperature"}
-              };
-
-              var hum_layout = {
-                title:"Humidity Graph",
-                yaxis:{title:"Humidity"}
-              };
-
-              var Humidity_Data = {
-                x: data.Time,
-                y: data.Room_1_humidity,
-                name:"Humidity_Data",
-                fill: "tozeroy",
-                type: "scatter"
-              };
-
-              var Temperature_Data = {
+            var Tempdata = {
                 x: data.Time,
                 y: data.Room_1_temperature,
-                name:"Temperature_Data",
+                name: "Temperature",
+                marker: { color: "rgb(255,0,0)" },
+                type: "scatter"
+            }
+            var temp_layout = {
+                title: "Temperature Graph",
+                yaxis: { title: "Temperature" }
+            };
+
+            var hum_layout = {
+                title: "Humidity Graph",
+                yaxis: { title: "Humidity" }
+            };
+
+            var Humidity_Data = {
+                x: data.Time,
+                y: data.Room_1_humidity,
+                name: "Humidity_Data",
+                fill: "tozeroy",
+                type: "scatter"
+            };
+
+            var Temperature_Data = {
+                x: data.Time,
+                y: data.Room_1_temperature,
+                name: "Temperature_Data",
                 fill: "tonexty",
                 type: "scatter"
-              };
-              var layout = {
-                title:"Temperature and Humidity",
+            };
+            var layout = {
+                title: "Temperature and Humidity",
                 autosize: false,
                 width: 500,
                 height: 500,
                 margin: {
-                  l: 50,
-                  r: 50,
-                  b: 100,
-                  t: 100,
-                  pad: 4
+                    l: 50,
+                    r: 50,
+                    b: 100,
+                    t: 100,
+                    pad: 4
                 },
                 paper_bgcolor: "#ffffff",
                 plot_bgcolor: "#ffffff"
-              };
-              var data = [Humidity_Data, Temperature_Data];
-              var graphOptions = {layout:layout,filename: "basic-area", fileopt: "overwrite"};
-                  plotly.plot(data, graphOptions, function (err, msg) {
-                   console.log('new plot',msg);
-               });       
-            var graphOptions = { layout: temp_layout ,filename: "Temp-data", fileopt: "overwrite" };
+            };
+            var data = [Humidity_Data, Temperature_Data];
+            var graphOptions = { layout: layout, filename: "basic-area", fileopt: "overwrite" };
+            plotly.plot(data, graphOptions, function (err, msg) {
+                console.log('new plot', msg);
+            });
+            var graphOptions = { layout: temp_layout, filename: "Temp-data", fileopt: "overwrite" };
             plotly.plot(Tempdata, graphOptions, function (err, msg) {
-                if(err){
+                if (err) {
                     console.log(err);
                 }
-                console.log(msg);        
+                console.log(msg);
             });
             var graphOptions = { filename: "Hum_data", fileopt: "overwrite" };
             plotly.plot(Humiditydata, graphOptions, function (err, msg) {
-                if(err){
+                if (err) {
                     console.log(err);
                 }
                 console.log(msg);
@@ -261,47 +258,187 @@ app.get('/Room1', (req, res) => {
         }
     });
 
-
-
 });
 
 app.get('/Room2', (req, res) => {
     var id = req.cookies.Decoded.email;
     console.log('id is : ', id);
-    var room2Temp;
-    var room2Hum;
-    user_model.findById(id, { 'Room_2_humidity': 1, 'Room_2_temperature': 1 }, function (err, data) {
+    user_model.findById(id, function (err, data) {
         if (err) {
             return console.log(err);
         }
         else {
-            //console.log(data.Room_2);
-            room2Hum = data.Room_2_humidity,
-                room2Temp = data.Room_2_temperature
+            var Humiditydata = [
+                {
+                    x: data.Time,
+                    y: data.Room_2_humidity,
+                    name: "Humidity",
+                    marker: { color: "rgb(135,206,250)" },
+                    type: "bar"
+                }
+            ];
+            var Tempdata = {
+                x: data.Time,
+                y: data.Room_2_temperature,
+                name: "Temperature",
+                marker: { color: "rgb(255,0,0)" },
+                type: "scatter"
+            }
+            var temp_layout = {
+                title: "Temperature Graph",
+                yaxis: { title: "Temperature" }
+            };
+
+            var hum_layout = {
+                title: "Humidity Graph",
+                yaxis: { title: "Humidity" }
+            };
+
+            var Humidity_Data = {
+                x: data.Time,
+                y: data.Room_2_humidity,
+                name: "Humidity_Data",
+                fill: "tozeroy",
+                type: "scatter"
+            };
+
+            var Temperature_Data = {
+                x: data.Time,
+                y: data.Room_2_temperature,
+                name: "Temperature_Data",
+                fill: "tonexty",
+                type: "scatter"
+            };
+            var layout = {
+                title: "Temperature and Humidity",
+                autosize: false,
+                width: 500,
+                height: 500,
+                margin: {
+                    l: 50,
+                    r: 50,
+                    b: 100,
+                    t: 100,
+                    pad: 4
+                },
+                paper_bgcolor: "#ffffff",
+                plot_bgcolor: "#ffffff"
+            };
+            var data = [Humidity_Data, Temperature_Data];
+            var graphOptions = { layout: layout, filename: "basic-area", fileopt: "overwrite" };
+            plotly.plot(data, graphOptions, function (err, msg) {
+                console.log('new plot', msg);
+            });
+            var graphOptions = { layout: temp_layout, filename: "Temp-data", fileopt: "overwrite" };
+            plotly.plot(Tempdata, graphOptions, function (err, msg) {
+                if (err) {
+                    console.log(err);
+                }
+                console.log(msg);
+            });
+            var graphOptions = { filename: "Hum_data", fileopt: "overwrite" };
+            plotly.plot(Humiditydata, graphOptions, function (err, msg) {
+                if (err) {
+                    console.log(err);
+                }
+                console.log(msg);
+                res.sendFile(__dirname + '/Views/plot1.html');
+            });
         }
     });
 
-    
 });
 
 app.get('/Room3', (req, res) => {
     var id = req.cookies.Decoded.email;
     console.log('id is : ', id);
-    var room3Temp;
-    var room3Hum;
-    user_model.findById(id, { 'Room_3_humidity': 1, 'Room_3_temperature': 1 }, function (err, data) {
+    var data1 = "Room_3_humidity";
+    user_model.findById(id, function (err, data) {
         if (err) {
             return console.log(err);
         }
         else {
-            //console.log(data.Room_3);
-            room1Hum = data.Room_3_humidity,
-                room1Temp = data.Room_3_temperature
+            var Humiditydata = [
+                {
+                    x: data.Time,
+                    y: data.Room_3_humidity,
+                    name: "Humidity",
+                    marker: { color: "rgb(135,206,250)" },
+                    type: "bar"
+                }
+            ];
+            var Tempdata = {
+                x: data.Time,
+                y: data.Room_3_temperature,
+                name: "Temperature",
+                marker: { color: "rgb(255,0,0)" },
+                type: "scatter"
+            }
+            var temp_layout = {
+                title: "Temperature Graph",
+                yaxis: { title: "Temperature" }
+            };
+
+            var hum_layout = {
+                title: "Humidity Graph",
+                yaxis: { title: "Humidity" }
+            };
+
+            var Humidity_Data = {
+                x: data.Time,
+                y: data.Room_3_humidity,
+                name: "Humidity_Data",
+                fill: "tozeroy",
+                type: "scatter"
+            };
+
+            var Temperature_Data = {
+                x: data.Time,
+                y: data.Room_3_temperature,
+                name: "Temperature_Data",
+                fill: "tonexty",
+                type: "scatter"
+            };
+            var layout = {
+                title: "Temperature and Humidity",
+                autosize: false,
+                width: 500,
+                height: 500,
+                margin: {
+                    l: 50,
+                    r: 50,
+                    b: 100,
+                    t: 100,
+                    pad: 4
+                },
+                paper_bgcolor: "#ffffff",
+                plot_bgcolor: "#ffffff"
+            };
+            var data = [Humidity_Data, Temperature_Data];
+            var graphOptions = { layout: layout, filename: "basic-area", fileopt: "overwrite" };
+            plotly.plot(data, graphOptions, function (err, msg) {
+                console.log('new plot', msg);
+            });
+            var graphOptions = { layout: temp_layout, filename: "Temp-data", fileopt: "overwrite" };
+            plotly.plot(Tempdata, graphOptions, function (err, msg) {
+                if (err) {
+                    console.log(err);
+                }
+                console.log(msg);
+            });
+            var graphOptions = { filename: "Hum_data", fileopt: "overwrite" };
+            plotly.plot(Humiditydata, graphOptions, function (err, msg) {
+                if (err) {
+                    console.log(err);
+                }
+                console.log(msg);
+                res.sendFile(__dirname + '/Views/plot1.html');
+            });
         }
- 
     });
 
 });
+
 app.listen(3000, () => {
     console.log('SERVER STARTED');
 });
