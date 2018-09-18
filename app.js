@@ -131,13 +131,12 @@ app.get('/login', cookieVerify, (req, res) => {
     console.log('redirecting');
 
     
-
-    var collection = req.cookies.Decoded.email;
    
     var id = req.cookies.Decoded.email;
     var parse = id.split("@");
     var name = parse[0];
 
+    console.log(name);
 
     res.render('homepage.hbs', {name:name});
 
@@ -325,6 +324,9 @@ app.get('/Room3',cookieVerify, (req, res) => {
         }
     });
 
+});
+app.post('/tohome',(req,res)=>{
+    res.redirect('/login');
 });
 
 app.post('/logout',(req,res)=>{
