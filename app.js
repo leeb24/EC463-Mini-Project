@@ -76,25 +76,26 @@ app.post('/register', (req, res) => {
     var User_Data = new user_model({
         _id: email
     });
+
     User_Data.save().then(() => {
         console.log('New user data created');
     }, (e) => {
         console.log('New user data error');
     });
+
     firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(function (user) {
             console.log('successful reg');
             var token = jwt.sign({ email: email, pw: password }, 'Mini_Project');
             console.log(token);
-            res.cookie('Token', token).send('cookie set');
-
+            res.cookie('Token', token);
+            res.redirect('/login');
         })
         .catch(function (error) {
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
             console.log(errorMessage);
-            return res.render('login_page.pug',{msg:`${errorMessage}`});
             // ...
         });
 });
@@ -129,14 +130,16 @@ app.get('/login', cookieVerify, (req, res) => {
     console.log('Cookie',req.cookies);
     console.log('redirecting');
 
-    console.log(req.cookies.Decoded.email); //Used to query user data
+    
 
     var collection = req.cookies.Decoded.email;
-    var result;
+   
+    var id = req.cookies.Decoded.email;
+    var parse = id.split("@");
+    var name = parse[0];
 
 
-    res.render('homepage.hbs', {
-    });
+    res.render('homepage.hbs', {name:name});
 
 
 });
@@ -180,7 +183,7 @@ app.get('/Room1',cookieVerify ,(req, res) => {
                     t: 100,
                     pad: 4
                 },
-                paper_bgcolor: "#ccffcc",
+                paper_bgcolor: "#ffffff",
                 plot_bgcolor: "#ffffff"
               };
 
@@ -243,7 +246,7 @@ app.get('/Room2',cookieVerify,(req, res) => {
                   t: 100,
                   pad: 4
                 },
-                paper_bgcolor: "#ccffcc",
+                paper_bgcolor: "#ffffff",
                 plot_bgcolor: "#ffffff"
               };
 
@@ -264,6 +267,7 @@ app.get('/Room2',cookieVerify,(req, res) => {
 });
 
 app.get('/Room3',cookieVerify, (req, res) => {
+
     var id = req.cookies.Decoded.email;
     var parse = id.split("@");
     var name = parse[0];
@@ -303,7 +307,7 @@ app.get('/Room3',cookieVerify, (req, res) => {
                   t: 100,
                   pad: 4
                 },
-                paper_bgcolor: "#ccffcc",
+                paper_bgcolor: "#ffffff",
                 plot_bgcolor: "#ffffff"
               };
 
@@ -323,9 +327,10 @@ app.get('/Room3',cookieVerify, (req, res) => {
 
 });
 
-app.get('/logout',(req,res)=>{
+app.post('/logout',(req,res)=>{
     //Destroy Private route Access 
     res.clearCookie("Token");
+    res.redirect('/');
 });
 app.listen(3000, () => {
     console.log('SERVER STARTED');
