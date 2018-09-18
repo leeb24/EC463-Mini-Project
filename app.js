@@ -94,6 +94,7 @@ app.post('/register', (req, res) => {
             var errorCode = error.code;
             var errorMessage = error.message;
             console.log(errorMessage);
+            return res.render('login_page.pug',{msg:`${errorMessage}`});
             // ...
         });
 });
