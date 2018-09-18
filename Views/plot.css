@@ -1,0 +1,9 @@
+body {
+    background: #ffffff;
+  }
+
+.HomeButton {
+    position: absolute;
+    right: 350px;
+    top: 300px;
+}

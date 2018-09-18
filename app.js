@@ -136,7 +136,7 @@ app.get('/login', cookieVerify, (req, res) => {
     var parse = id.split("@");
     var name = parse[0];
 
-    console.log(name);
+    console.log(name); 
 
     res.render('homepage.hbs', {name:name});
 
@@ -193,7 +193,7 @@ app.get('/Room1',cookieVerify ,(req, res) => {
                         console.log(err);
                     }
                    console.log('new plot',msg);
-                   res.sendFile(__dirname + '/Views/plot1.html');
+                   res.render('plot1.pug');
                });
             
         
