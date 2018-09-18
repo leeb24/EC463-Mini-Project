@@ -1,6 +1,5 @@
 const express = require("express");
 const bodyParser = require('body-parser');
-var mongoose = require('mongoose')
 var cookieParser = require('cookie-parser');
 var mysql = require('mysql');
 var app = express();
@@ -10,10 +9,8 @@ const hbs = require('hbs');
 var plotly = require('plotly')("Mini-Project", "gyJSx4qEcM6AZ77gntxr");
 var pug = require ('pug');
 
-var { mongoose } = require('./models/mongoose.js');
-var { temperature_model } = require('./models/temperature_model.js');  //"mongoose validation", moogoose schemas
-var { humidity_model } = require('./models/humidity_model.js');
-var { user_model } = require('./models/user_model.js');
+const { mongoose } = require('./models/mongoose.js');
+const { user_model } = require('./models/user_model.js');
 
 var config = {
 
@@ -63,7 +60,6 @@ var cookieVerify = function (req, res, next) {
 };
 
 
-
 app.get('/', function (req, res) {
     res.render('login_page.pug');
     //res.sendFile(__dirname + '/Views/login_page.html');
@@ -85,11 +81,6 @@ app.post('/register', (req, res) => {
     }, (e) => {
         console.log('New user data error');
     });
-
-
-
-
-
     firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(function (user) {
             console.log('successful reg');
@@ -105,8 +96,6 @@ app.post('/register', (req, res) => {
             console.log(errorMessage);
             // ...
         });
-
-
 });
 
 app.post('/login', (req, res) => {
@@ -146,9 +135,6 @@ app.get('/login', cookieVerify, (req, res) => {
 
 
     res.render('homepage.hbs', {
-        pageTitle: 'Temp and Humidity Plotter',
-        welcomeMessage: 'hihi'
-
     });
 
 
@@ -159,8 +145,7 @@ app.get('/Room1',cookieVerify ,(req, res) => {
     var parse = id.split("@");
     var name = parse[0];
     console.log('id is : ', id);
-
-    user_model.findById(id, { 'Room_1_humidity': 1, 'Room_1_temperature': 1,'Time':1 }, function (err, data) {
+    user_model.findById(id, function (err, data) {
         if (err) {
             return console.log(err);
         }
@@ -169,15 +154,15 @@ app.get('/Room1',cookieVerify ,(req, res) => {
               var Humidity_Data = {
                 x: data.Time,
                 y: data.Room_1_humidity,
-                name:"Humidity_Data",
+                name: "Humidity_Data",
                 fill: "tozeroy",
                 type: "scatter"
-              };
+            };
 
-              var Temperature_Data = {
+            var Temperature_Data = {
                 x: data.Time,
                 y: data.Room_1_temperature,
-                name:"Temperature_Data",
+                name: "Temperature_Data",
                 fill: "tonexty",
                 type: "scatter"
               };
@@ -188,11 +173,11 @@ app.get('/Room1',cookieVerify ,(req, res) => {
                 width: 800,
                 height: 800,
                 margin: {
-                  l: 50,
-                  r: 50,
-                  b: 100,
-                  t: 100,
-                  pad: 4
+                    l: 50,
+                    r: 50,
+                    b: 100,
+                    t: 100,
+                    pad: 4
                 },
                 paper_bgcolor: "#ccffcc",
                 plot_bgcolor: "#ffffff"
@@ -216,8 +201,6 @@ app.get('/Room1',cookieVerify ,(req, res) => {
         }
     });
 
-
-
 });
 
 app.get('/Room2',cookieVerify,(req, res) => {
@@ -225,9 +208,7 @@ app.get('/Room2',cookieVerify,(req, res) => {
     var parse = id.split("@");
     var name = parse[0];
     console.log('id is : ', id);
-    var room2Temp;
-    var room2Hum;
-    user_model.findById(id, { 'Room_2_humidity': 1, 'Room_2_temperature': 1 }, function (err, data) {
+    user_model.findById(id, function (err, data) {
         if (err) {
             return console.log(err);
         }
@@ -279,7 +260,6 @@ app.get('/Room2',cookieVerify,(req, res) => {
         }
     });
 
-    
 });
 
 app.get('/Room3',cookieVerify, (req, res) => {
@@ -287,9 +267,8 @@ app.get('/Room3',cookieVerify, (req, res) => {
     var parse = id.split("@");
     var name = parse[0];
     console.log('id is : ', id);
-    var room3Temp;
-    var room3Hum;
-    user_model.findById(id, { 'Room_3_humidity': 1, 'Room_3_temperature': 1 }, function (err, data) {
+    var data1 = "Room_3_humidity";
+    user_model.findById(id, function (err, data) {
         if (err) {
             return console.log(err);
         }
@@ -339,7 +318,6 @@ app.get('/Room3',cookieVerify, (req, res) => {
             
         
         }
- 
     });
 
 });

@@ -1,5 +1,4 @@
 
-
 const rn = require('random-number');
 
 
@@ -16,6 +15,8 @@ module.exports.temperature_generated = () => {
     for (i = 0; i < 10; i++) {
         matrix[i] = rn(temperature_random);
     };
+    
+
     return matrix;
 };
 
