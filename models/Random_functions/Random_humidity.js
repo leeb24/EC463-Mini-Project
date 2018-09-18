@@ -10,7 +10,7 @@ var matrix =[];
 
 module.exports.humidity_generated = () => {
 
-    for (i = 0; i < 10; i++) {
+    for (i = 0; i < 30; i++) {
         matrix[i] = rn(humidity_random);
 
     }

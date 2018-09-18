@@ -15,13 +15,26 @@ time_min = Number(time_min);
 var matrix =[];
 module.exports.time_generated = () => {
     for (i = 0; i < 10; i++) {
-        matrix[i] = time_ec_hour_min+time_hour+':'+time_min;
+        if (time_hour < 10 || time_min <10) {
+            if (time_hour < 10 && time_min <10) {
+                matrix[i] = time_ec_hour_min+'0'+time_hour+':0'+time_min;
+            }
+            else if (time_hour < 10) {
+                matrix[i] = time_ec_hour_min+'0'+time_hour+':'+time_min;
+            }
+            else {
+                matrix[i] = time_ec_hour_min+time_hour+':0'+time_min;
+            }
+        }
+        else{
+            matrix[i] = time_ec_hour_min+time_hour+':'+time_min;
+        }
+        
         time_min = time_min+5;
         if (time_min>=60){
              time_min -= 60;
              time_hour +=1;
          }
-        console.log(time_ec_hour_min+time_hour+':'+time_min);
     }
     return matrix;
 };
