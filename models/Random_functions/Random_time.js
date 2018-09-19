@@ -30,10 +30,10 @@ module.exports.time_generated = () => {
             matrix[i] = time_ec_hour_min+time_hour+':'+time_min;
         }
         
-        time_min = time_min+5;
-        if (time_min>=60){
-             time_min -= 60;
-             time_hour +=1;
+        time_min = time_min-30;
+        if (time_min<0){
+             time_min += 60;
+             time_hour -=1;
          }
     }
     return matrix;
