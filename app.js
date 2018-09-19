@@ -62,7 +62,7 @@ var cookieVerify = function (req, res, next) {
 
 
 app.get('/', function (req, res) {
-    res.render('login_page.pug');
+    return res.render('login_page.pug');
     //res.sendFile(__dirname + '/Views/login_page.html');
 });
 
@@ -78,25 +78,30 @@ app.post('/register', (req, res) => {
         _id: email
     });
 
-    User_Data.save().then(() => {
-        console.log('New user data created');
-    }, (e) => {
-        console.log('New user data error');
-    });
+    
 
     firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(function (user) {
+
+            User_Data.save().then(() => {
+                console.log('New user data created');
+            }, (e) => {
+                console.log('New user data error');
+            });
+
             console.log('successful reg');
             var token = jwt.sign({ email: email, pw: password }, 'Mini_Project');
-            console.log(token);
             res.cookie('Token', token);
-            res.redirect('/login');
+            
+            return res.redirect('/login');
+            
         })
         .catch(function (error) {
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
             console.log(errorMessage);
+            res.render('login_page.pug',{msg:errorMessage});
             // ...
         });
 });
@@ -141,12 +146,7 @@ app.get('/login', cookieVerify, (req, res) => {
 
     console.log(name); 
 
-    res.render('homepage.hbs', {name:name},(err, html) => {
-        if (err){
-            return console.log(err);
-        } 
-        console.log(html);
-    });
+    return res.render('homepage.hbs', {name:name});
 
 
 });
@@ -311,19 +311,20 @@ app.get('/Room3',cookieVerify, (req, res) => {
               };
 
               var data = [Humidity_Data, Temperature_Data];
-              var graphOptions = {layout:layout,filename: "basic-area", fileopt: "overwrite"};
+              /*var graphOptions = {layout:layout,filename: "basic-area", fileopt: "overwrite"};
                   plotly.plot(data, graphOptions, function (err, msg) {
                     if(err){
                         console.log(err);
                     }
                    console.log('new plot',msg);
                    res.render('plot1.hbs');
-               });
+               });*/
         }
     });
 
 });
 app.post('/tohome',(req,res)=>{
+    consol.log('In tohome');
     res.redirect('/login');
 });
 
