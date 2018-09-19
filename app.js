@@ -195,12 +195,6 @@ app.get('/Room1',cookieVerify ,(req, res) => {
                    console.log('new plot',msg);
                    res.render('plot1.pug');
                });
-            
-        
-                
-            
-            //console.log(data.Room_1);
-
         }
     });
 
@@ -256,10 +250,8 @@ app.get('/Room2',cookieVerify,(req, res) => {
                         console.log(err);
                     }
                    console.log('new plot',msg);
-                   res.sendFile(__dirname + '/Views/plot1.html');
+                   res.render('plot1.pug');
                });
-            
-        
         }
     });
 
@@ -317,10 +309,8 @@ app.get('/Room3',cookieVerify, (req, res) => {
                         console.log(err);
                     }
                    console.log('new plot',msg);
-                   res.sendFile(__dirname + '/Views/plot1.html');
+                   res.render('plot1.pug');
                });
-            
-        
         }
     });
 
