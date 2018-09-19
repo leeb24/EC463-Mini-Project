@@ -271,7 +271,7 @@ app.get('/Room3',cookieVerify, (req, res) => {
     var id = req.cookies.Decoded.email;
     var parse = id.split("@");
     var name = parse[0];
-    //console.log('id is : ', id);
+    console.log('id is : ', id);
     var data1 = "Room_3_humidity";
     user_model.findById(id, function (err, data) {
         if (err) {
@@ -312,20 +312,20 @@ app.get('/Room3',cookieVerify, (req, res) => {
               };
 
               var data = [Humidity_Data, Temperature_Data];
-              /*var graphOptions = {layout:layout,filename: "basic-area", fileopt: "overwrite"};
+              var graphOptions = {layout:layout,filename: "basic-area", fileopt: "overwrite"};
                   plotly.plot(data, graphOptions, function (err, msg) {
                     if(err){
                         //console.log(err);
                     }
                    //console.log('new plot',msg);
                    res.render('plot1.hbs');
-               });*/
+               });
         }
     });
 
 });
 app.post('/tohome',(req,res)=>{
-    consol.log('In tohome');
+    console.log('In tohome');
     res.redirect('/login');
 });
 
