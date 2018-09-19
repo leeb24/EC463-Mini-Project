@@ -201,7 +201,7 @@ app.get('/Room1',cookieVerify ,(req, res) => {
                         console.log(err);
                     }
                    console.log('new plot',msg);
-                   res.render('plot1.pug');
+                   res.render('plot1.hbs');
                });
         }
     });
@@ -258,7 +258,7 @@ app.get('/Room2',cookieVerify,(req, res) => {
                         console.log(err);
                     }
                    console.log('new plot',msg);
-                   res.render('plot1.pug');
+                   res.render('plot1.hbs');
                });
         }
     });
@@ -317,7 +317,7 @@ app.get('/Room3',cookieVerify, (req, res) => {
                         console.log(err);
                     }
                    console.log('new plot',msg);
-                   res.render('plot1.pug');
+                   res.render('plot1.hbs');
                });
         }
     });

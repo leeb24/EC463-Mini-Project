@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <link rel="stylesheet" type="text/css" href="plot.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Homepage</title>
     <style>
         body {
             background: #2d343d;
@@ -70,31 +69,20 @@
         }
     </style>
 </head>
-{{!-- "left: 450px; position: absolute; top: 100px" --}}
-<h1 style="left: 330px; position: absolute; top: 10px; margin-top:80px;color:#FFFFFF">{{name}}'s Temperature and Humidity Plotter</h1>
+
+
+
 
 <form>
+    
+    <div>
+        <a href="https://plot.ly/~Mini-Project/10/" target="_blank" title="basic-area" style="display: block; text-align: center;"><img src="https://plot.ly/~Mini-Project/10.png" alt="basic-area" style="max-width: 100%;width: 600px;"  width="600" onerror="this.onerror=null;this.src='https://plot.ly/404.png';" /></a>
+        <script data-plotly="Mini-Project:10" src="https://plot.ly/embed.js" async></script>
+    </div>
+    
     <body>
-        <br>
-        <br>
-        <div align = "center" >
-            <button  class="button" style="left: 500px; position: absolute; top: 150px;" name="Room_1" formaction="/Room1" formmethod="GET"><span>Room 1 </span></button>
-            <br>
-            <br>
-            <img class="image" style="left: 900px; position: absolute; top: 250px;" src="temp.png"align="right" alt="temp">         
-
-            <button  class="button" style="left: 500px; position: absolute; top: 250px;" name="Room_2" formaction="/Room2" formmethod="GET"><span>Room 2 </span></button>
-            <br>
-            <br>
-            <button  class="button" style="left: 500px; position: absolute; top: 350px;" name="Room_3" formaction="/Room3" formmethod="GET"><span>Room 3 </span></button>
-            <br>
-            <br>
-            <button  class="button"  style="left: 500px; position: absolute; top: 450px;" name="logout" formaction="/logout" formmethod="POST"><span> LOGOUT </span></button>    
-        </div>
-    </body>
+    <button class="button" style="left: 1050px; position: absolute; top: 500px;" type="button" formaction = "/tohome" formmethod = "POST">Back</button>
+    <body>
 </form>
-
-</html>
-
 
 
