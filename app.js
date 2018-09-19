@@ -45,15 +45,15 @@ app.set('view engine', 'pug');
 app.set('view engine', 'hbs');
 
 var cookieVerify = function (req, res, next) {
-    console.log(req.cookies);
+    //console.log(req.cookies);
     jwt.verify(req.cookies.Token, 'Mini_Project', function (err, decoded) {
         if (err) {
-            console.log(err);
-            console.log('Invalid Access Detected');
+            //console.log(err);
+            //console.log('Invalid Access Detected');
             res.redirect('/');
         }
         else {
-            console.log('Token Verified!: ', decoded);
+            //console.log('Token Verified!: ', decoded);
             res.cookie('Decoded', decoded);
             next();
         }
@@ -68,8 +68,8 @@ app.get('/', function (req, res) {
 
 
 app.post('/register', (req, res) => {
-    console.log('email: ', req.body.email);
-    console.log('password: ', req.body.pw);
+    //console.log('email: ', req.body.email);
+    //console.log('password: ', req.body.pw);
     let email = req.body.email;
     let password = req.body.pw;
 
@@ -79,16 +79,16 @@ app.post('/register', (req, res) => {
     });
 
     User_Data.save().then(() => {
-        console.log('New user data created');
+        //console.log('New user data created');
     }, (e) => {
-        console.log('New user data error');
+        //console.log('New user data error');
     });
 
     firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(function (user) {
-            console.log('successful reg');
+            //console.log('successful reg');
             var token = jwt.sign({ email: email, pw: password }, 'Mini_Project');
-            console.log(token);
+            //console.log(token);
             res.cookie('Token', token);
             res.redirect('/login');
         })
@@ -96,7 +96,7 @@ app.post('/register', (req, res) => {
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
-            console.log(errorMessage);
+            //console.log(errorMessage);
             // ...
         });
 });
@@ -108,9 +108,9 @@ app.post('/login', (req, res) => {
 
     firebase.auth().signInWithEmailAndPassword(email, password)
         .then(function (firebaseUser) {
-            console.log('POST logged in');
+            //console.log('POST logged in');
             var token = jwt.sign({ email: email, pw: password }, 'Mini_Project');
-            console.log(token);
+            //console.log(token);
             res.cookie('Token', token);
             var parse = email.split("@");
             var name = parse[0];
@@ -120,7 +120,7 @@ app.post('/login', (req, res) => {
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
-            console.log(errorMessage);
+            //console.log(errorMessage);
             return res.render('login_page.pug',{msg:`${errorMessage}`});
             //return res.redirect('/');
             // ...
@@ -130,8 +130,8 @@ app.post('/login', (req, res) => {
 
 app.get('/login', cookieVerify, (req, res) => {
 
-    console.log('Cookie',req.cookies);
-    console.log('redirecting');
+    //console.log('Cookie',req.cookies);
+    //console.log('redirecting');
 
     
    
@@ -139,13 +139,13 @@ app.get('/login', cookieVerify, (req, res) => {
     var parse = id.split("@");
     var name = parse[0];
 
-    console.log(name); 
+    //console.log(name); 
 
     res.render('homepage.hbs', {name:name},(err, html) => {
         if (err){
-            return console.log(err);
+            return //console.log(err);
         } 
-        console.log(html);
+        //console.log(html);
     });
 
 
@@ -155,13 +155,14 @@ app.get('/Room1',cookieVerify ,(req, res) => {
     var id = req.cookies.Decoded.email;
     var parse = id.split("@");
     var name = parse[0];
-    console.log('id is : ', id);
+    //console.log('id is : ', id);
     user_model.findById(id, function (err, data) {
+        console.log(data.Time);
         if (err) {
-            return console.log(err);
+            return //console.log(err);
         }
         else {
-            console.log('Time is',data);
+            //console.log('Time is',data);
               var Humidity_Data = {
                 x: data.Time,
                 y: data.Room_1_humidity,
@@ -198,9 +199,9 @@ app.get('/Room1',cookieVerify ,(req, res) => {
               var graphOptions = {layout:layout,filename: "basic-area", fileopt: "overwrite"};
                   plotly.plot(data, graphOptions, function (err, msg) {
                     if(err){
-                        console.log(err);
+                        //console.log(err);
                     }
-                   console.log('new plot',msg);
+                   //console.log('new plot',msg);
                    res.render('plot1.hbs');
                });
         }
@@ -212,13 +213,13 @@ app.get('/Room2',cookieVerify,(req, res) => {
     var id = req.cookies.Decoded.email;
     var parse = id.split("@");
     var name = parse[0];
-    console.log('id is : ', id);
+    //console.log('id is : ', id);
     user_model.findById(id, function (err, data) {
         if (err) {
-            return console.log(err);
+            return //console.log(err);
         }
         else {
-            //console.log(data.Room_2);
+            ////console.log(data.Room_2);
             var Humidity_Data = {
                 x: data.Time,
                 y: data.Room_2_humidity,
@@ -255,9 +256,9 @@ app.get('/Room2',cookieVerify,(req, res) => {
               var graphOptions = {layout:layout,filename: "basic-area", fileopt: "overwrite"};
                   plotly.plot(data, graphOptions, function (err, msg) {
                     if(err){
-                        console.log(err);
+                        //console.log(err);
                     }
-                   console.log('new plot',msg);
+                   //console.log('new plot',msg);
                    res.render('plot1.hbs');
                });
         }
@@ -270,14 +271,14 @@ app.get('/Room3',cookieVerify, (req, res) => {
     var id = req.cookies.Decoded.email;
     var parse = id.split("@");
     var name = parse[0];
-    console.log('id is : ', id);
+    //console.log('id is : ', id);
     var data1 = "Room_3_humidity";
     user_model.findById(id, function (err, data) {
         if (err) {
-            return console.log(err);
+            return //console.log(err);
         }
         else {
-            //console.log(data.Room_3);
+            ////console.log(data.Room_3);
             var Humidity_Data = {
                 x: data.Time,
                 y: data.Room_3_humidity,
@@ -314,9 +315,9 @@ app.get('/Room3',cookieVerify, (req, res) => {
               var graphOptions = {layout:layout,filename: "basic-area", fileopt: "overwrite"};
                   plotly.plot(data, graphOptions, function (err, msg) {
                     if(err){
-                        console.log(err);
+                        //console.log(err);
                     }
-                   console.log('new plot',msg);
+                   //console.log('new plot',msg);
                    res.render('plot1.hbs');
                });
         }
@@ -333,5 +334,5 @@ app.post('/logout',(req,res)=>{
     res.redirect('/');
 });
 app.listen(3000, () => {
-    console.log('SERVER STARTED');
+    //console.log('SERVER STARTED');
 });

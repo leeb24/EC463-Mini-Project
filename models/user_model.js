@@ -4,7 +4,6 @@ const random_temperature = require('./Random_functions/Random_temperature.js');
 var random_time = require('./Random_functions/Random_time.js');
 var temperature_data =  random_temperature.temperature_generated();
 var humidity_data = random_humidity.humidity_generated();
-
 var user_model = mongoose.model('User_Data', {
     _id: { type: String },
     Room_1_humidity: { 
