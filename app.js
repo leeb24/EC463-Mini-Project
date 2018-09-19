@@ -42,6 +42,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/Views'));
 hbs.registerPartials(__dirname + './Views/partials');
 app.set('view engine', 'pug');
+app.set('view engine', 'hbs');
 
 var cookieVerify = function (req, res, next) {
     console.log(req.cookies);
@@ -111,7 +112,9 @@ app.post('/login', (req, res) => {
             var token = jwt.sign({ email: email, pw: password }, 'Mini_Project');
             console.log(token);
             res.cookie('Token', token);
-            return res.redirect('/login');
+            var parse = email.split("@");
+            var name = parse[0];
+            return res.render('homepage.hbs', {name:name});
         })
         .catch(function (error) {
             // Handle Errors here.
@@ -138,7 +141,12 @@ app.get('/login', cookieVerify, (req, res) => {
 
     console.log(name); 
 
-    res.render('homepage.hbs', {name:name});
+    res.render('homepage.hbs', {name:name},(err, html) => {
+        if (err){
+            return console.log(err);
+        } 
+        console.log(html);
+    });
 
 
 });
@@ -256,7 +264,7 @@ app.get('/Room2',cookieVerify,(req, res) => {
                         console.log(err);
                     }
                    console.log('new plot',msg);
-                   res.sendFile(__dirname + '/Views/plot1.html');
+                   res.render('plot1.pug');
                });
             
         
@@ -317,7 +325,7 @@ app.get('/Room3',cookieVerify, (req, res) => {
                         console.log(err);
                     }
                    console.log('new plot',msg);
-                   res.sendFile(__dirname + '/Views/plot1.html');
+                   res.render('plot1.pug');
                });
             
         
