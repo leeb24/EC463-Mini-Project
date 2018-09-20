@@ -92,8 +92,13 @@ app.post('/register', (req, res) => {
             console.log('successful reg');
             var token = jwt.sign({ email: email, pw: password }, 'Mini_Project');
             res.cookie('Token', token);
+
+            var id = req.cookies.Decoded.email;
+            var parse = id.split("@");
+            var name = parse[0];
             
             return res.redirect('/login');
+            //return res.render('homepage.hbs', {name:name});
             
         })
         .catch(function (error) {
@@ -144,7 +149,7 @@ app.get('/login', cookieVerify, (req, res) => {
     var parse = id.split("@");
     var name = parse[0];
 
-    //console.log(name); 
+    console.log('Name is:',name); 
 
     return res.render('homepage.hbs', {name:name});
 
