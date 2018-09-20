@@ -35,4 +35,4 @@ Both: Front-End Design
 
 ### Project Diagram
 
-![Alt text](Images/Untitled Diagram.pdf?raw=true "Diagram")
+![Alt text](Images/diagram.png?raw=true "Diagram")
