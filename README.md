@@ -24,3 +24,8 @@ After the user chooses any of the rooms, the user enters the plotpage. humidity 
 Byoungsul Lee: Authentication, Routing(General Backend), Plotting (27 Commits) <br />
 Qian Zhang: Object Modeling, Database, Testing  (32 Commits) <br />
 Both: Front-End Design
+
+### References
+[https://gist.github.com/aerrity/fd393e5511106420fba0c9602cc05d35] <br />
+[https://www.udemy.com/the-complete-nodejs-developer-course-2/learn/v4/] <br />
+
