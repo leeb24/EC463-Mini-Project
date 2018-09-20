@@ -21,6 +21,6 @@ After the user chooses any of the rooms, the user enters the plotpage. humidity 
 ![Alt text](Images/Plot.png?raw=true "Plot Page")
 
 ### Contributions
-Byoungsul Lee: Authentication, Routing(General Backend), Plotting (27 Commits)
-Qian Zhang: Object Modeling, Database, Testing  (32 Commits)
+Byoungsul Lee: Authentication, Routing(General Backend), Plotting (27 Commits) <br />
+Qian Zhang: Object Modeling, Database, Testing  (32 Commits) <br />
 Both: Front-End Design
