@@ -8,7 +8,7 @@ var jwt = require('jsonwebtoken');
 const hbs = require('hbs');
 var plotly = require('plotly')("Mini-Project", "gyJSx4qEcM6AZ77gntxr");
 var pug = require ('pug');
-
+ 
 const { mongoose } = require('./models/mongoose.js');
 const { user_model } = require('./models/user_model.js');
 
@@ -92,9 +92,8 @@ app.post('/register', (req, res) => {
             console.log('successful reg');
             var token = jwt.sign({ email: email, pw: password }, 'Mini_Project');
             res.cookie('Token', token);
-            
-            return res.redirect('/login');
-            
+            res.render('login_page.pug',{msg:'Congratulation, now log in with account information'});
+            //return res.redirect('/login');
         })
         .catch(function (error) {
             // Handle Errors here.
@@ -137,15 +136,11 @@ app.get('/login', cookieVerify, (req, res) => {
 
     //console.log('Cookie',req.cookies);
     //console.log('redirecting');
-
-    
-   
     var id = req.cookies.Decoded.email;
     var parse = id.split("@");
     var name = parse[0];
 
     //console.log(name); 
-
     return res.render('homepage.hbs', {name:name});
 
 
