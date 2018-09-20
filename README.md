@@ -20,7 +20,8 @@ After the user signs in or signup, the user enters the homepage. There are four 
 ![Alt text](Images/Homepage.png?raw=true "Home Page")
 
 ### Plot Page
-After the user chooses any of the rooms, the user enters the plotpage. humidity and temperature for the room choosed by the user are plotted by the help of Plotly. The data are extracted from mLab, by the identity(email) and the room number the user chooses. The user can zoom in/out or click to show humidiity or temperature seperately, or go back to homepage by click the homepage button. 
+After the user chooses any of the rooms, the user enters the plotpage. humidity and temperature for the room choosed by the user are plotted by the help of Plotly. The data are extracted from mLab, by the identity(email) and the room number the user chooses. The user can zoom in/out or click to show humidiity or temperature seperately, or go back to homepage by click the homepage button. <br />
+All the used model for temperature and humidity are within the "model" folder.
 ![Alt text](Images/Plot.png?raw=true "Plot Page")
 
 ### Contributions
