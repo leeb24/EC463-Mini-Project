@@ -22,5 +22,5 @@ After the user chooses any of the rooms, the user enters the plotpage. humidity 
 
 ### Contributions
 Byoungsul Lee: Authentication, Routing(General Backend), Plotting 
-Qian Zhang: Object Modeling, Database, Testing 
+Qian Zhang: Object Modeling, Database, Testing  
 Both: Front-End Design
