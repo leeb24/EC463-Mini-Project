@@ -19,3 +19,8 @@ After the user signs in or signup, the user enters the homepage. There are four 
 ### Plot Page
 After the user chooses any of the room, the user enters the plotpage. humidity and temperature for the room choosed by the user are plotted by the help of Plotly. The data are extracted from mLab, by the identity and the room number the user chooses. The user can zoom in/out or click to show humidiity or temperature seperately, or go back to homepage by click the homepage button. 
 ![Alt text](Images/Plot.png?raw=true "Plot Page")
+
+### Contributions
+Byoungsul Lee: Authentication, Routing(General Backend), Plotting 
+Qian Zhang: Object Modeling, Database, Testing 
+Both: Front-End Design
