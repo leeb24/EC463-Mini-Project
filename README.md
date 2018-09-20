@@ -33,3 +33,6 @@ Both: Front-End Design
 [https://gist.github.com/aerrity/fd393e5511106420fba0c9602cc05d35] <br />
 [https://www.udemy.com/the-complete-nodejs-developer-course-2/learn/v4/] <br />
 
+### Project Diagram
+
+![Alt text](Images/Untitled Diagram.pdf?raw=true "Diagram")
